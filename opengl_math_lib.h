@@ -8,25 +8,33 @@
  *            type                  *
  ***********************************/
 
+class Vector3f
+{
+public:
+	float m[3];
+	Vector3f();
+	Vector3f(float, float, float);
+	Vector3f(const Vector3f &);
+	Vector3f operator+(const Vector3f &);
+	float mod() const;
+	void scale(float);
+	float dot(const Vector3f &);
+	Vector3f cross(const Vector3f &);
+	Vector3f normalize();
+	void print();
+};
 
-/************************************
- *           vector                 *
- ***********************************/
 class Vector4f
 {
 public:
-	float x, y, z, w;
+	float m[4];
+	Vector4f();
 	Vector4f(float, float, float, float);
 	Vector4f(const Vector4f &);
 	Vector4f operator+(const Vector4f &);
-	float mod(const Vector4f &);
-	void scale(float);
-	float dot(const Vector4f &);
-	Vector4f cross(const Vector4f &);
-	Vector4f normalize(const Vector4f &);
-	~Vector4f();
+	float mod() const;
+	void print();
 };
-
 
 /************************************
  *           matrix                 *
@@ -46,7 +54,7 @@ public:
 	Mat4f operator+(const Mat4f &);
 	Mat4f operator*(const Mat4f &);
 	Vector4f operator*(const Vector4f &);
-	void print(const Mat4f &);
+	void print();
 	~Mat4f();
 };
 
