@@ -4,12 +4,12 @@
 /************************************
  *            type                  *
  ***********************************/
-typedef struct
+/*typedef struct
 {
 	float x;
 	float y;
 	float z;
-}Vec3;
+}Vec3;*/
 
 typedef struct
 {
@@ -17,22 +17,22 @@ typedef struct
 	float y;
 	float z;
 	float w;
-}Vec4;
+}Vec;
 
 typedef struct
 {
-	vec4 row1;
-	vec4 row2;
-	vec4 row3;
-	vec4 row4;
-	vec4 col1;
-	vec4 col2;
-	vec4 col3;
-	vec4 col4;
-}Mat4;
+	Vec row1;
+	Vec row2;
+	Vec row3;
+	Vec row4;
+	Vec col1;
+	Vec col2;
+	Vec col3;
+	Vec col4;
+}Mat;
 
-typedef Mat4 Tr;
-typedef Mat4 Cam;
+typedef Mat Tr;
+typedef Mat Cam;
 
 /************************************
  *            utils                 *
@@ -44,15 +44,15 @@ float to_radian(float);
  *           vector                 *
  ***********************************/
 
-Vec3 vec3_new();
-float vec3_mod(Vec3);
-void vec3_copy(Vec3, Vec3);
-void vec3_add(Vec3, Vec3);
-void vec3_scale(Vec3, float);
-void vec3_dot(Vec3, Vec3);
-void vec3_cross(Vec3, Vec3);
-void vec3_normalize(Vec3);
-void vec3_delete(Vec3);
+Vec vec_new();
+float vec_mod(Vec);
+void vec_copy(Vec, Vec);
+void vec_add(Vec, Vec);
+void vec_scale(Vec, float);
+void vec_dot(Vec, Vec);
+void vec_cross(Vec, Vec);
+void vec_normalize(Vec);
+void vec_delete(Vec);
 
 /************************************
  *           matrix                 *
@@ -86,4 +86,4 @@ Mat persp_proj(float, float, float, float);
  *            camera                *
  ***********************************/
 
-Cam look_at(Vec3, Vec3, Vec3);
+Cam look_at(Vec, Vec, Vec);
