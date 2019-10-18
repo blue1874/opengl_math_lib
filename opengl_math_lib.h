@@ -1,5 +1,8 @@
-#include <stdlib.h>
-#include <math.h>
+#ifndef OPENGL_MATH_LIB_H
+#define OPENGL_MATH_LIB_H
+
+#include <cstdio>
+#include <cmath>
 
 /************************************
  *            type                  *
@@ -11,13 +14,53 @@
 	float z;
 }Vec3;*/
 
+class Vector4f
+{
+private:
+	float x;
+	float y;
+	float z;
+	float w;
+
+public:
+	Vector4f(float, float, float, float);
+	Vector4f(const Vector4f &);
+	Vector4f operator+(const Vector4f &);
+	float mod(const Vector4f &);
+	void scale(float);
+	float dot(const Vector4f &);
+	Vector4f cross(const Vector4f &);
+	Vector4f normalize(const Vector4f &);
+	~Vector4f();
+};
+
+class Mat4f
+{
+private:
+	float m[4][4];
+public:
+	Mat4f(/* args */);
+	Mat4f mat_add(Mat, Mat);
+	void mat_mult_mat(Mat, Mat);
+	void mat_print(Mat);
+	~Mat4f();
+};
+
+Mat4f::Mat4f(/* args */)
+{
+}
+
+Mat4f::~Mat4f()
+{
+}
+
 typedef struct
 {
 	float x;
 	float y;
 	float z;
 	float w;
-}Vec;
+} Vec;
 
 typedef struct
 {
@@ -29,7 +72,7 @@ typedef struct
 	Vec col2;
 	Vec col3;
 	Vec col4;
-}Mat;
+} Mat;
 
 typedef Mat Tr;
 typedef Mat Cam;
@@ -44,12 +87,12 @@ float to_radian(float);
  *           vector                 *
  ***********************************/
 
-Vec vec_new();
+Vec vec_new(float, float, float, float);
 float vec_mod(Vec);
 void vec_copy(Vec, Vec);
 void vec_add(Vec, Vec);
 void vec_scale(Vec, float);
-void vec_dot(Vec, Vec);
+float vec_dot(Vec, Vec);
 void vec_cross(Vec, Vec);
 void vec_normalize(Vec);
 void vec_delete(Vec);
@@ -87,3 +130,5 @@ Mat persp_proj(float, float, float, float);
  ***********************************/
 
 Cam look_at(Vec, Vec, Vec);
+
+#endif
