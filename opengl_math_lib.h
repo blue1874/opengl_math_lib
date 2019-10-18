@@ -64,10 +64,14 @@ public:
  ***********************************/
 
 float to_radian(float);
+
 /************************************
  *           transform              *
  ***********************************/
 
+Mat4f tr_translate(const Mat4f &, const Vector3f &);
+Mat4f tr_rotate(const Mat4f &, float, const Vector3f &);
+Mat4f tr_scale(const Mat4f &, const Vector3f &);
 
 /************************************
  *           projection             *

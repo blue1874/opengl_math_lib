@@ -217,3 +217,57 @@ void Vector4f::print()
     printf("%f %f %f %f\n", m[0], m[1], m[2], m[3]);
     printf("\n");
 }
+
+/************************************
+ *           tranform               *
+ ***********************************/
+
+Mat4f tr_translate(const Mat4f &mat, const Vector3f &vec)
+{
+	Mat4f result(mat);
+	result.m[3][0]+=vec.m[0];
+	result.m[3][1]+=vec.m[1];
+	result.m[3][2]+=vec.m[2];
+	return result;
+}
+
+Mat4f tr_rotate(const Mat4f &mat, float theta, const Vector3f &vec)
+{
+	float c=cos(theta);
+	float s=sin(theta);
+	
+	float rx=vec.m[0];
+	float ry=vec.m[1];
+	float rz=vec.m[2];
+
+	Mat4f tmp;
+
+	tmp.m[0][0]=c+rx*rx*(1.0f-c);
+	tmp.m[1][0]=rx*ry*(1.0f-c)+rz*s;
+	tmp.m[2][0]=rz*rx*(1.0f-c)-ry*s;
+	tmp.m[0][1]=rx*ry*(1.0f-c)-rz*s;
+	tmp.m[1][1]=c+ry*ry*(1.0f-c);
+	tmp.m[2][1]=rz*ry*(1.0f-c)+rx*s;
+	tmp.m[0][2]=rx*rz*(1.0f-c)+ry*s;
+	tmp.m[1][2]=ry*rz*(1.0f-c)-rx*s;
+	tmp.m[2][2]=c+rz*rz*(1.0f-c);
+	
+	Mat4f result;
+
+	result = tmp * mat;
+	result.m[0][3]=mat.m[0][3];
+	result.m[1][3]=mat.m[1][3];
+	result.m[2][3]=mat.m[2][3];
+	result.m[3][3]=1.0;
+
+	return result;
+}
+
+Mat4f tr_scale(const Mat4f &mat, const Vector3f &vec)
+{
+	Mat4f result(mat);
+	result.m[0][0]*=vec.m[0];
+	result.m[1][1]*=vec.m[1];
+	result.m[2][2]*=vec.m[2];
+	return result;
+}
