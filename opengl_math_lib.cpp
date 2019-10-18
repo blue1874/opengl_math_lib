@@ -4,62 +4,57 @@
  *           vector                 *
  ***********************************/
 
-Vec vec_new(float x = 0, float y = 0, float z = 0, float w = 0)
+Vector3f::Vector3f()
 {
-    Vec vec;
-    vec.x = x;
-    vec.y = y;
-    vec.z = z;
-    vec.w = w;
-    return vec;
+	m[0]=0.0;
+	m[1]=0.0;
+	m[2]=0.0;
 }
-
-float vec_mod(Vec p)
+Vector3f::Vector3f(float _x, float _y, float _z)
 {
-    return sqrt(p.x * p.x + p.y * p.y + p.z * p.z + p.w * p.w);
+	m[0] = _x;
+	m[1] = _y;
+	m[2] = _z;
 }
-
-void vec_copy(Vec &p1, Vec p2)
+Vector3f::Vector3f(const Vector3f & vec)
 {
-    p1.x = p2.x;
-    p1.y = p2.y;
-    p1.z = p2.z;
-    p1.w = p2.w;
+	m[0] = (vec.m)[0];
+	m[1] = (vec.m)[1];
+	m[2] = (vec.m)[2];
 }
-
-void vec_add(Vec &p1, Vec p2)
+Vector3f Vector3f::operator+(const Vector3f &vec)
 {
-    p1.x += p2.x;
-    p1.y += p2.y;
-    p1.z += p2.z;
-    p1.w += p2.w;
+	Vector3f result;
+	(result.m).[0] = m[0] + (vec.m)[0];
+	(result.m).[1] = m[1] + (vec.m)[1];
+	(result.m).[2] = m[2] + (vec.m)[2];
+	return result;
 }
-
-void vec_scale(Vec &p1, float scale)
+float Vector3f::mod()
 {
-    p1.x *= scale;
-    p1.y *= scale;
-    p1.z *= scale;
-    p1.w *= scale;
+	return sqrt(m[0]*m[0]+m[1]*m[1]+m[2]*m[2]);
 }
-
-float vec_dot(Vec p1, Vec p2)
+void Vector3f::scale(float s)
 {
-    return p1.x * p2.x + p1.y * p2.y + p1.z * p2.z + p1.w * p2.w;
+	m[0]*=s;
+	m[1]*=s;
+	m[2]*=s;
 }
-
-void vec_cross(Vec &p1, Vec p2)
+float Vector3f::dot(const Vector3f &vec)
 {
-    
+	return m[0]*(vec.m)[0]+m[1]*(vec.m)[1]+m[2]*(vec.m)[2];
 }
-
-void vec_normalize(Vec &p)
+Vector3f Vector3f::cross(const Vector3f &vec)
 {
-    float mod = vec_mod(p);
-    p.x /= mod;
-    p.y /= mod;
-    p.z /= mod;
-    p.w /= mod;
+	Vector3f result;
+	(result.m)[0] = m[1]*(vec.m)[2]-m[2]*(vec.m)[1];
+	(result.m)[1] = m[2]*(vec.m)[0]-m[0]*(vec.m)[2];
+	(result.m)[1] = m[0]*(vec.m)[1]-m[1]*(vec.m)[0];
+	return result;
 }
-
-void vec_delete(Vec);
+Vector3f Vector3f::normalize(const Vector3f &vec)
+{
+	float sq_and = vec.mod();
+	Vector3f result((vec.m)[0]/sq_and, (vec.m)[1]/sq_and, (vec.m)[2]/sq_and);
+	return result;
+}

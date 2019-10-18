@@ -14,24 +14,19 @@
 	float z;
 }Vec3;*/
 
-class Vector4f
+class Vector3f
 {
-private:
-	float x;
-	float y;
-	float z;
-	float w;
-
 public:
-	Vector4f(float, float, float, float);
-	Vector4f(const Vector4f &);
-	Vector4f operator+(const Vector4f &);
-	float mod(const Vector4f &);
+	float m[3];
+	Vector3f();
+	Vector3f(float, float, float);
+	Vector3f(const Vector3f &);
+	Vector3f operator+(const Vector3f &);
+	float mod();
 	void scale(float);
-	float dot(const Vector4f &);
-	Vector4f cross(const Vector4f &);
-	Vector4f normalize(const Vector4f &);
-	~Vector4f();
+	float dot(const Vector3f &);
+	Vector3f cross(const Vector3f &);
+	Vector3f normalize(const Vector3f &);
 };
 
 class Mat4f
