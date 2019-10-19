@@ -1,6 +1,15 @@
 #include "opengl_math_lib.h"
 
 /************************************
+ *             utils                *
+ ***********************************/
+
+float to_radian(float ang)
+{
+	return ang*3.1415926535/180.f;
+}
+
+/************************************
  *           matrix                 *
  ***********************************/
 
@@ -233,8 +242,8 @@ Mat4f tr_translate(const Mat4f &mat, const Vector3f &vec)
 
 Mat4f tr_rotate(const Mat4f &mat, float theta, const Vector3f &vec)
 {
-	float c=cos(theta);
-	float s=sin(theta);
+	float c=cos(to_radian(theta));
+	float s=sin(to_radian(theta));
 	
 	float rx=vec.m[0];
 	float ry=vec.m[1];
@@ -269,5 +278,41 @@ Mat4f tr_scale(const Mat4f &mat, const Vector3f &vec)
 	result.m[0][0]*=vec.m[0];
 	result.m[1][1]*=vec.m[1];
 	result.m[2][2]*=vec.m[2];
+	return result;
+}
+
+/************************************
+ *           projection             *
+ ***********************************/
+
+Mat4f proj_ortho(float left, float right, float bottom, float top, float near, float far)
+{
+	Mat4f result;
+
+	result.m[0][0]=2.0f/(right-left);
+	result.m[1][1]=2.0f/(top-bottom);
+	result.m[2][2]=2.0f/(far-near);
+
+	result.m[0][3]=-(right+left)/(right-left);
+	result.m[1][3]=-(top+bottom)/(top-bottom);
+	result.m[2][3]=(far+near)/(far-near);
+
+	result.m[3][3]=1.0f;
+
+	return result;
+}
+
+Mat4f proj_persp(float fov, float aspect, float near, float far)
+{
+	Mat4f result;
+	
+	float t = tan(to_radian(fov)*0.5);
+
+	result.m[0][0]=1.0/(t*aspect);
+	result.m[1][1]=1.0/t;
+	result.m[2][2]=(far+near)/(near-far);
+	result.m[2][3]=(2.0f*far*near)/(near-far);
+	result.m[3][2]=-1.0f;
+
 	return result;
 }

@@ -77,10 +77,21 @@ Mat4f tr_scale(const Mat4f &, const Vector3f &);
  *           projection             *
  ***********************************/
 
+Mat4f proj_ortho(float, float, float, float, float, float);
+Mat4f proj_persp(float, float, float, float);
 
 /************************************
  *            camera                *
  ***********************************/
 
-
+class Camera
+{
+private:
+	Mat4f cam;
+public:
+	Camera();
+	Camera(Vector3f, Vector3f, Vector3f);
+	void look_at(Vector3f, Vector3f, Vector3f);
+	const float* to_ptr()const;
+};
 #endif
